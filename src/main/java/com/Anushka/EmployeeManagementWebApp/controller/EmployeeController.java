@@ -50,7 +50,7 @@ public class EmployeeController {
         return employeeService.changePasswordByEmployee(empPassword,empEmail);
     }
 
-    @DeleteMapping(value = "delete/hrEmail/{hrEmail}/{empEmail}")
+    @DeleteMapping(value = "/delete/hrEmail/{hrEmail}/{empEmail}")
     public String deleteEmployeeByHr(@PathVariable String hrEmail, @PathVariable String empEmail){
         return employeeService.deleteEmployeeByHr(hrEmail,empEmail);
     }

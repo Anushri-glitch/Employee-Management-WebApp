@@ -87,7 +87,7 @@ public class HrService {
         }
 
         //Match it database encrypted password
-        boolean isPasswordValid = encryptedPassword.equals(signInDto.getSignInPassword());
+        boolean isPasswordValid = encryptedPassword.equals(hr.getHrPassword());
         if(!isPasswordValid){
             throw new IllegalStateException("Hr Password is Wrong...Else Hr is not valid!!");
         }
