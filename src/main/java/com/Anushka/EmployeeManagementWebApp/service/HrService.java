@@ -5,14 +5,20 @@ import com.Anushka.EmployeeManagementWebApp.dto.SignInOutput;
 import com.Anushka.EmployeeManagementWebApp.dto.SignUpOutput;
 import com.Anushka.EmployeeManagementWebApp.dto.signUpHrInput;
 import com.Anushka.EmployeeManagementWebApp.model.AuthTokenHr;
+import com.Anushka.EmployeeManagementWebApp.model.Employee;
 import com.Anushka.EmployeeManagementWebApp.model.Hr;
+import com.Anushka.EmployeeManagementWebApp.repository.IEmployeeDao;
 import com.Anushka.EmployeeManagementWebApp.repository.IHrDao;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.xml.bind.DatatypeConverter;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 @Service
 public class HrService {
@@ -22,6 +28,9 @@ public class HrService {
 
     @Autowired
     AuthService authService;
+
+    @Autowired
+    IEmployeeDao employeeDao;
 
     public SignUpOutput signUp(signUpHrInput signUpDto) {
         //Check Employee is Registered or not
@@ -88,5 +97,37 @@ public class HrService {
 
         //Setup output
         return new SignInOutput("Authentication Successful!!!" + hr.getHrName(), authTokenHr.getHrToken());
+    }
+
+    public String storeEmployeeInHr(String employeeEmails, String hrEmail) {
+
+        //Check Hr is Valid or not
+        Hr hr = hrDao.findFirstByHrEmail(hrEmail);
+        if(hr == null){
+            throw new IllegalStateException("Hr is not Exist!!!");
+        }
+
+        //With the help of Employee Emails Make the List Of Employees and save in Hr Employees List
+        List<Employee> employeeList = SetEmployeeList(employeeEmails);
+        hr.setEmployeeList(employeeList);
+        hrDao.save(hr);
+
+        return hr.getHrName() + " Your EmployeeList is Added!!";
+    }
+
+    private List<Employee> SetEmployeeList(String employeeEmails) {
+
+        JSONObject newObject = new JSONObject(employeeEmails);
+        String newEmployeeList = newObject.getString("employeeEmails");
+        String[] updatedEmpArray = newEmployeeList.split(",");
+        List<Employee> employeeArray = new ArrayList<>();
+
+        for(String mails : updatedEmpArray){
+            Employee emp = employeeDao.findFirstByEmployeeEmail(mails);
+            if(emp != null){
+                employeeArray.add(emp);
+            }
+        }
+        return employeeArray;
     }
 }

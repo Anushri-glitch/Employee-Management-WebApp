@@ -160,4 +160,19 @@ public class EmployeeService {
 
         return emp.getEmployeeEmail() + " Your Password is Changed!!!";
     }
+
+    public String deleteEmployeeByHr(String hrEmail, String empEmail) {
+
+        Hr hr = hrDao.findFirstByHrEmail(hrEmail);
+        if(hr == null){
+            throw new IllegalStateException("Hr is not Exist!!");
+        }
+
+        Employee employee = getEmployee(empEmail);
+        if(employee == null){
+            throw new IllegalStateException("Employee Already Deleted!!");
+        }
+        employeeDao.delete(employee);
+        return employee.getEmployeeName() + " Is Removed!!...Thank You..";
+    }
 }

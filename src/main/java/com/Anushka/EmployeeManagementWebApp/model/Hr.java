@@ -5,6 +5,9 @@ import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @Entity
@@ -21,6 +24,9 @@ public class Hr {
     private String hrPassword;
     private Integer age;
     private String hrPhone;
+
+    @OneToMany
+    private List<Employee> employeeList = new ArrayList<>();
 
     public Hr(String hrName, String hrEmail, String hrPassword, Integer age, String hrPhone) {
         this.hrName = hrName;

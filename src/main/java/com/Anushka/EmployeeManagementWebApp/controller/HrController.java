@@ -6,6 +6,7 @@ import com.Anushka.EmployeeManagementWebApp.dto.SignUpOutput;
 import com.Anushka.EmployeeManagementWebApp.dto.signUpHrInput;
 import com.Anushka.EmployeeManagementWebApp.service.HrService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,6 +25,12 @@ public class HrController {
     @PostMapping(value = "/HrSignIn")
     public SignInOutput SignInHr(@RequestBody SignInInput signInDto){
         return hrService.signIn(signInDto);
+    }
+
+    //Store Employees In Hr List
+    @PostMapping(value = "storeEmployee/hrEmail/{hrEmail}")
+    public String storeEmployeeInHr(@RequestBody String employeeEmails, @PathVariable String hrEmail){
+        return hrService.storeEmployeeInHr(employeeEmails,hrEmail);
     }
 
 }
