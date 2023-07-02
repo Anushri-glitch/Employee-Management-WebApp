@@ -377,6 +377,9 @@ public class signUpHrInput {
     private String contact;
 }
 ```
+
+##### To See The DTO
+:white_check_mark: [EmployeeManagement-DTO](https://github.com/Anushri-glitch/Employee-Management-WebApp/tree/master/src/main/java/com/Anushka/EmployeeManagementWebApp/dto)
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ## :four: DataStructures Used in Project
